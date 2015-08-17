@@ -16,28 +16,21 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!--<RadioGroup-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center_horizontal"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:checkedButton="@+id/linear_layout_rb">-->
-        <!--<RadioButton android:id="@+id/linear_layout_rb"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/linear_layout_manager"/>-->
-        <!--<RadioButton android:id="@+id/grid_layout_rb"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/grid_layout_manager"/>-->
-    <!--</RadioGroup>-->
+              xmlns:card="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recyclerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+    <it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        card:list_card_layout_resourceID="@layout/native_recyclerview_card_layout"
+        android:id="@+id/card_recyclerview"/>
+
 </LinearLayout>
 <!-- From: file:/Users/AdrianHsu/Google_Drive/Summer_2015/RecyclerView/Application/src/main/res/layout/recycler_view_frag.xml -->

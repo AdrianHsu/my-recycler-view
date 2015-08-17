@@ -26,6 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
+import java.util.ArrayList;
+
+import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
 import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 
@@ -42,20 +45,13 @@ public class RecyclerViewFragment extends Fragment {
 //    protected RecyclerView mRecyclerView;
     protected CardRecyclerView mRecyclerView;
   //    protected CustomAdapter mAdapter;
-    protected CardArrayRecyclerViewAdapter mAdapter;
-
+    public static CardArrayRecyclerViewAdapter mAdapter;
 
     protected CardRecyclerView.LayoutManager mLayoutManager;
-    protected String[] mDataset;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
-        initDataset();
-
 
     }
 
@@ -66,15 +62,13 @@ public class RecyclerViewFragment extends Fragment {
         rootView.setTag(TAG);
 
         // BEGIN_INCLUDE(initializeRecyclerView)
-//        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        mRecyclerView = (CardRecyclerView) rootView.findViewById(R.id.carddemo_recyclerview);
+        mRecyclerView = (CardRecyclerView) rootView.findViewById(R.id.card_recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         setRecyclerViewLayoutManager();
 
         mAdapter = new CardArrayRecyclerViewAdapter(getActivity(), MainActivity.cards);
         // Set CustomAdapter as the adapter for RecyclerView.
-//        mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
 
         mRecyclerView.setHasFixedSize(false);
@@ -114,14 +108,5 @@ public class RecyclerViewFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
-    private void initDataset() {
-        mDataset = new String[DATASET_COUNT];
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
-        }
-    }
+
 }

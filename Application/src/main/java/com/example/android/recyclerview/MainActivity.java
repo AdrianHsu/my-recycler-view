@@ -17,8 +17,11 @@
 
 package com.example.android.recyclerview;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.example.android.common.activities.SampleActivityBase;
@@ -26,6 +29,7 @@ import com.example.android.common.activities.SampleActivityBase;
 import java.util.ArrayList;
 
 import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardExpand;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 
 /**
@@ -53,31 +57,73 @@ public class MainActivity extends SampleActivityBase {
         transaction.commit();
       }
 
-      layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-      layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-          layout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-              layout.setRefreshing(false);
-            }
-          }, 2000);
-        }
-      });
-      layout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
-
-
-
-      //Create a Card
-      Card card = new Card(this);
-
-      //Create a CardHeader
-      CardHeader header = new CardHeader(this);
-      //Add Header to card
-      card.addCardHeader(header);
-
-      cards.add(card);
+//      layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+//      layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+//        @Override
+//        public void onRefresh() {
+//          layout.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//              updateAdapter(cards);
+//              layout.setRefreshing(false);
+//            }
+//          }, 2000);
+//        }
+//      });
+//      layout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+      initCard();
     }
+    public void initCard() {
+      for(int i = 0; i < 60; i ++) {
+        //Create a Card
+        Card card = new Card(this);
+        card.setTitle("this is card #" + i);
+        //Create a CardHeader
+        CardHeader header = new CardHeader(this);
+        header.setTitle("Adrian's card");
+        header.setButtonExpandVisible(true);
 
+        //Add Header to card
+        card.addCardHeader(header);
+
+        //This provides a simple (and useless) expand area
+        CardExpand expand = new CardExpand(this);
+        //Set inner title in Expand Area
+        expand.setTitle("Expand Area test");
+        card.addCardExpand(expand);
+
+        card.setExpanded(false);
+
+        //Add ClickListener
+        card.setOnClickListener(new Card.OnCardClickListener() {
+
+          @Override
+          public void onClick(Card card, View view) {
+            Toast.makeText(MainActivity.this, "Click Listener card=" + card.getTitle(), Toast
+              .LENGTH_SHORT)
+              .show();
+          }
+        });
+        //Add SwipeListener
+        card.setOnSwipeListener(new Card.OnSwipeListener() {
+
+          @Override
+          public void onSwipe(Card card) {
+            Toast.makeText(MainActivity.this, "Swipe Listener card=" + card.getTitle(), Toast
+              .LENGTH_SHORT)
+              .show();
+          }
+        });
+
+        cards.add(card);
+      }
+    }
+    /**
+     * Update the adapter
+     */
+    public void updateAdapter(ArrayList<Card> cards) {
+      if (cards != null) {
+//        RecyclerViewFragment.mAdapter.addAll(cards);
+      }
+    }
 }
