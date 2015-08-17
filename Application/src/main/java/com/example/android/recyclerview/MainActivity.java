@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardExpand;
 import it.gmariotti.cardslib.library.internal.CardHeader;
+import it.gmariotti.cardslib.library.internal.CardThumbnail;
 
 public class MainActivity extends SampleActivityBase {
 
@@ -91,8 +92,11 @@ public class MainActivity extends SampleActivityBase {
         //Set inner title in Expand Area
         expand.setTitle("Expand Area test");
         card.addCardExpand(expand);
-
         card.setExpanded(false);
+
+        CardThumbnail thumb = new CardThumbnail(this);
+        thumb.setDrawableResource(R.drawable.adrian);
+        card.addCardThumbnail(thumb);
 
         card.setClickable(true);
         //Add ClickListener
