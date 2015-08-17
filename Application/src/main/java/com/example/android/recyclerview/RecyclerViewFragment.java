@@ -24,12 +24,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.RadioButton;
 
-import java.util.ArrayList;
 
-import it.gmariotti.cardslib.library.internal.Card;
+
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
 import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 
@@ -43,10 +40,11 @@ public class RecyclerViewFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
 
 //    protected RecyclerView mRecyclerView;
-    protected CardRecyclerView mRecyclerView;
+    public static CardRecyclerView mRecyclerView;
   //    protected CustomAdapter mAdapter;
     public static CardArrayRecyclerViewAdapter mAdapter;
     protected CardRecyclerView.LayoutManager mLayoutManager;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
