@@ -20,6 +20,7 @@ package com.example.android.recyclerview;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.example.android.common.activities.SampleActivityBase;
 
 /**
@@ -32,6 +33,7 @@ import com.example.android.common.activities.SampleActivityBase;
 public class MainActivity extends SampleActivityBase {
 
     public static final String TAG = "MainActivity";
+    PullRefreshLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,5 +46,20 @@ public class MainActivity extends SampleActivityBase {
         transaction.replace(R.id.sample_content_fragment, fragment);
         transaction.commit();
       }
+
+      layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+      layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+          layout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+              layout.setRefreshing(false);
+            }
+          }, 2000);
+        }
+      });
+      layout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
     }
+
 }
