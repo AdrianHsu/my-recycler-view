@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.RadioButton;
 
 import java.util.ArrayList;
@@ -40,19 +41,16 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 public class RecyclerViewFragment extends Fragment {
 
     private static final String TAG = "RecyclerViewFragment";
-    private static final int DATASET_COUNT = 60;
 
 //    protected RecyclerView mRecyclerView;
     protected CardRecyclerView mRecyclerView;
   //    protected CustomAdapter mAdapter;
     public static CardArrayRecyclerViewAdapter mAdapter;
-
     protected CardRecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -99,14 +97,26 @@ public class RecyclerViewFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager((getActivity()));
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
+//      http://stackoverflow.com/questions/27362806/android-swiperefreshlayout-framelayoutgit
+        mRecyclerView.addOnScrollListener( new CardRecyclerView.OnScrollListener() {
+
+          @Override
+          public void onScrollStateChanged(RecyclerView cardRecyclerView, int i) {}
+
+          @Override
+          public void onScrolled(RecyclerView cardRecyclerView, int i, int i2) {
+            int topRowVerticalPosition =
+              (mRecyclerView == null || mRecyclerView.getChildCount() == 0) ?
+                0 : mRecyclerView.getChildAt(0).getTop();
+            MainActivity.layout.setEnabled(topRowVerticalPosition >= 0);
+          }
+        });
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save currently selected layout manager.
-
-        super.onSaveInstanceState(savedInstanceState);
+      // Save currently selected layout manager.
+      super.onSaveInstanceState(savedInstanceState);
     }
-
 
 }

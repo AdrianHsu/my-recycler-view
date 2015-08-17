@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
@@ -32,17 +33,11 @@ import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardExpand;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 
-/**
- * A simple launcher activity containing a summary sample description, sample log and a custom
- * {@link android.support.v4.app.Fragment} which can display a view.
- * <p>
- * For devices with displays with a width of 720dp or greater, the sample log is always visible,
- * on other devices it's visibility is controlled by an item on the Action Bar.
- */
 public class MainActivity extends SampleActivityBase {
 
     public static final String TAG = "MainActivity";
-    PullRefreshLayout layout;
+    public static PullRefreshLayout layout;
+    boolean init = false;
 
     public static ArrayList<Card> cards = new ArrayList<Card>();
     @Override
@@ -57,21 +52,26 @@ public class MainActivity extends SampleActivityBase {
         transaction.commit();
       }
 
-//      layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-//      layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-//        @Override
-//        public void onRefresh() {
-//          layout.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
+      layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+      layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+          layout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
 //              updateAdapter(cards);
-//              layout.setRefreshing(false);
-//            }
-//          }, 2000);
-//        }
-//      });
-//      layout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
-      initCard();
+              layout.setRefreshing(false);
+              RecyclerViewFragment.mAdapter.notifyDataSetChanged();
+            }
+          }, 2000);
+        }
+      });
+      layout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+
+      if(init == false) {
+        initCard();
+        init = true;
+      }
     }
     public void initCard() {
       for(int i = 0; i < 60; i ++) {
@@ -94,27 +94,17 @@ public class MainActivity extends SampleActivityBase {
 
         card.setExpanded(false);
 
+        card.setClickable(true);
         //Add ClickListener
         card.setOnClickListener(new Card.OnCardClickListener() {
 
           @Override
           public void onClick(Card card, View view) {
-            Toast.makeText(MainActivity.this, "Click Listener card=" + card.getTitle(), Toast
-              .LENGTH_SHORT)
-              .show();
+//            Toast.makeText(MainActivity.this, "Click Listener card=" + card.getTitle(), Toast
+//              .LENGTH_SHORT)
+//              .show();
           }
         });
-        //Add SwipeListener
-        card.setOnSwipeListener(new Card.OnSwipeListener() {
-
-          @Override
-          public void onSwipe(Card card) {
-            Toast.makeText(MainActivity.this, "Swipe Listener card=" + card.getTitle(), Toast
-              .LENGTH_SHORT)
-              .show();
-          }
-        });
-
         cards.add(card);
       }
     }
@@ -126,4 +116,6 @@ public class MainActivity extends SampleActivityBase {
 //        RecyclerViewFragment.mAdapter.addAll(cards);
       }
     }
+
+
 }
