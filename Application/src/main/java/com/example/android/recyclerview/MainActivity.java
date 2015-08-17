@@ -23,6 +23,11 @@ import android.support.v4.app.FragmentTransaction;
 import com.baoyz.widget.PullRefreshLayout;
 import com.example.android.common.activities.SampleActivityBase;
 
+import java.util.ArrayList;
+
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardHeader;
+
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
  * {@link android.support.v4.app.Fragment} which can display a view.
@@ -35,6 +40,7 @@ public class MainActivity extends SampleActivityBase {
     public static final String TAG = "MainActivity";
     PullRefreshLayout layout;
 
+    public static ArrayList<Card> cards = new ArrayList<Card>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -60,6 +66,18 @@ public class MainActivity extends SampleActivityBase {
         }
       });
       layout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+
+
+
+      //Create a Card
+      Card card = new Card(this);
+
+      //Create a CardHeader
+      CardHeader header = new CardHeader(this);
+      //Add Header to card
+      card.addCardHeader(header);
+
+      cards.add(card);
     }
 
 }

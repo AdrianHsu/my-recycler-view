@@ -26,6 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
+import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
+import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
+
 
 /**
  * Demonstrates the use of {@link RecyclerView} with a {@link LinearLayoutManager} and a
@@ -36,9 +39,13 @@ public class RecyclerViewFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
     private static final int DATASET_COUNT = 60;
 
-    protected RecyclerView mRecyclerView;
-    protected CustomAdapter mAdapter;
-    protected RecyclerView.LayoutManager mLayoutManager;
+//    protected RecyclerView mRecyclerView;
+    protected CardRecyclerView mRecyclerView;
+  //    protected CustomAdapter mAdapter;
+    protected CardArrayRecyclerViewAdapter mAdapter;
+
+
+    protected CardRecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
 
     @Override
@@ -49,6 +56,7 @@ public class RecyclerViewFragment extends Fragment {
         // remote server.
         initDataset();
 
+
     }
 
     @Override
@@ -58,16 +66,24 @@ public class RecyclerViewFragment extends Fragment {
         rootView.setTag(TAG);
 
         // BEGIN_INCLUDE(initializeRecyclerView)
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+//        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        mRecyclerView = (CardRecyclerView) rootView.findViewById(R.id.carddemo_recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         setRecyclerViewLayoutManager();
 
-
-        mAdapter = new CustomAdapter(mDataset);
+        mAdapter = new CardArrayRecyclerViewAdapter(getActivity(), MainActivity.cards);
         // Set CustomAdapter as the adapter for RecyclerView.
-        mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
+
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //Set the empty view
+        if (mRecyclerView != null) {
+          mRecyclerView.setAdapter(mAdapter);
+        }
 
         return rootView;
     }
