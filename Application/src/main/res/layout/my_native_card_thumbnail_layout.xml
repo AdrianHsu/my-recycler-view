@@ -17,15 +17,12 @@
   ~   limitations under the License.
   ~  *****************************************************************************
   -->
-
-<!-- You can customize this layout.
-     You need to have in your layout a `CardView` with the ID `list_cardId` -->
-
 <it.gmariotti.cardslib.library.view.CardViewNative
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:id="@+id/list_cardId"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/list_card.thumbnail"
-    card:card_layout_resourceID="@layout/my_native_card_thumbnail_layout"/>
+    style="@style/native_recyclerview_card.thumbnail"
+    card:card_layout_resourceID="@layout/native_card_thumbnail_layout"
+    />
